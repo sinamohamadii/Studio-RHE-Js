@@ -1,8 +1,5 @@
 
 window.addEventListener("DOMContentLoaded", (event) => {
-
-    console.log('hello there all people around the world');
-
     // Text Spliting Code: Splits any tag with 'split-text' attribute
     gsap.registerPlugin(SplitType)
     let textSplit;
