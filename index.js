@@ -1,5 +1,6 @@
 
 window.addEventListener("DOMContentLoaded", (event) => {
+
     // Text Spliting Code: Splits any tag with 'split-text' attribute
     gsap.registerPlugin(SplitType)
     let textSplit;
@@ -40,29 +41,29 @@ window.addEventListener("DOMContentLoaded", (event) => {
             })
             .from(
                 ".hero_heading-wrapper .char", {
-                yPercent: 100,
-                duration: 0.8,
-                stagger: {
-                    amount: 0.5
+                    yPercent: 100,
+                    duration: 0.8,
+                    stagger: {
+                        amount: 0.5
+                    },
+                    ease: "power3.out"
                 },
-                ease: "power3.out"
-            },
                 "-=1"
             )
             .from(
                 ".hero_sub-text-wrap .word", {
-                yPercent: 100,
-                duration: 1,
-                ease: "power2.out"
-            },
+                    yPercent: 100,
+                    duration: 1,
+                    ease: "power2.out"
+                },
                 "<45%"
             )
             .from(
                 ".hero_background-image-wrap", {
-                scale: 1.5,
-                ease: "power1.inOut",
-                duration: 2.5
-            },
+                    scale: 1.5,
+                    ease: "power1.inOut",
+                    duration: 2.5
+                },
                 0
             )
     };
@@ -82,29 +83,29 @@ window.addEventListener("DOMContentLoaded", (event) => {
             })
             .from(
                 ".hero_heading-wrapper .char", {
-                yPercent: 100,
-                duration: 0.8,
-                stagger: {
-                    amount: 0.5
+                    yPercent: 100,
+                    duration: 0.8,
+                    stagger: {
+                        amount: 0.5
+                    },
+                    ease: "power3.out"
                 },
-                ease: "power3.out"
-            },
                 "-=1"
             )
             .from(
                 ".hero_sub-text-wrap .word", {
-                yPercent: 100,
-                duration: 1,
-                ease: "power2.out"
-            },
+                    yPercent: 100,
+                    duration: 1,
+                    ease: "power2.out"
+                },
                 "<45%"
             )
             .from(
                 ".hero_background-image-wrap", {
-                scale: 1.5,
-                ease: "power1.inOut",
-                duration: 2.5
-            },
+                    scale: 1.5,
+                    ease: "power1.inOut",
+                    duration: 2.5
+                },
                 0
             );
     };
@@ -143,19 +144,19 @@ window.addEventListener("DOMContentLoaded", (event) => {
             })
             .from(
                 ".nav_menu_other-links .text-link_wrap", {
-                opacity: 0,
-                ease: "power2.out",
-                yPercent: -40,
-                duration: 0.3
-            },
+                    opacity: 0,
+                    ease: "power2.out",
+                    yPercent: -40,
+                    duration: 0.3
+                },
                 ">-=0.5"
             )
             .from(
                 ".nav_menu_close-trigger", {
-                opacity: 0,
-                ease: "power2.out",
-                duration: 1.6
-            },
+                    opacity: 0,
+                    ease: "power2.out",
+                    duration: 1.6
+                },
                 0
             );
 
@@ -174,14 +175,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
             })
             .to(
                 ".nav_icon-line:nth-of-type(1)", {
-                rotate: 22.5
-            },
+                    rotate: 22.5
+                },
                 0
             )
             .to(
                 ".nav_icon-line:nth-of-type(3)", {
-                rotate: -22.5
-            },
+                    rotate: -22.5
+                },
                 0
             );
 
@@ -281,9 +282,113 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 duration: 0.3,
                 ease: "power3.out"
             });
+
+        // Images scaling out when they appear on scroll
+        $(".intro_image-wrap, .work_card, .article_card").each(function (index) {
+            let cardImageTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: $(this),
+                    containerAnimation: horizontalMainTl,
+                    start: "left right",
+                    end: "right right"
+                }
+            });
+
+            cardImageTl.from($(this).find(".image-full-cover"), {
+                scale: 1.3,
+                ease: "power2.out",
+                duration: 1
+            });
+        });
+
+        // Adds paralllax animation to the image divider on scroll
+        let dividerImageTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".image-divider_wrapper",
+                containerAnimation: horizontalMainTl,
+                scrub: true,
+                start: "left right",
+                end: "right left"
+            }
+        });
+
+        dividerImageTl.from(".image-divider_image", {
+            x: "-50%",
+            ease: "none"
+        });
+
+        // Jornal title text animation
+        let journalTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".jornal_title-wrap",
+                containerAnimation: horizontalMainTl,
+                start: "left right",
+                end: "right right"
+            }
+        });
+
+        journalTl.from(".jornal_title-wrap .char", {
+            yPercent: -120,
+            duration: 0.8,
+            stagger: {
+                amount: 0.4
+            },
+            ease: "power3.out"
+        });
     };
 
-    const mobileAnimate = () => { };
+    const mobileAnimate = () => {
+
+        // Adds paralllax to the hero image on scroll mobile
+        let moileHeroImageTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".section_hero",
+                scrub: true,
+                start: "top top",
+                end: "bottom top"
+            }
+        });
+
+        moileHeroImageTl.to(".hero_background-image", {
+            y: "15vh",
+            ease: "none"
+        });
+
+        // Scroll image scales out
+        $(".intro_image-wrap, .work_card, .article_card").each(function (index) {
+            let monileCardImageTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: $(this),
+                    start: "top 90%",
+                    end: "bottom top"
+                }
+            });
+
+            monileCardImageTl.from($(this).find(".image-full-cover"), {
+                scale: 1.5,
+                ease: "power2.out",
+                duration: 2
+            });
+        });
+
+        // Jornal title letter stagger
+        let journalTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".jornal_title-wrap",
+                start: "top 80%",
+                end: "bottom top"
+            }
+        });
+
+        journalTl.from(".jornal_title-wrap .char", {
+            yPercent: -120,
+            duration: 1,
+            stagger: {
+                amount: 0.25
+            },
+            ease: "power3.out"
+        });
+    };
 
     let pageAnimationMm = gsap.matchMedia();
 
